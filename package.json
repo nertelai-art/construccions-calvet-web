@@ -17,7 +17,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check": "pnpm typecheck && pnpm lint && pnpm test",
-    "prepare": "git config core.hooksPath .githooks"
+    "prepare": "git config core.hooksPath .githooks || exit 0"
   },
   "dependencies": {
     "@react-three/drei": "10.7.9",
