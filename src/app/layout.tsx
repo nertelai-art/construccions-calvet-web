@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import { Besley, IBM_Plex_Mono, Instrument_Sans } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { RevealObserver } from '@/components/ui/RevealObserver';
-import { business, siteUrl } from '@/content/business';
+import { business } from '@/content/business';
+import { siteUrl } from '@/content/site';
 import './globals.css';
 
 const besley = Besley({ subsets: ['latin'], variable: '--font-besley', display: 'swap' });
