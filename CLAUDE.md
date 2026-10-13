@@ -18,6 +18,18 @@ pnpm build:local  # build de producció amb webpack; a CI és `pnpm build`
 
 Previsualització: `.claude/launch.json` (`calvet-dev`, `calvet-prod`).
 
+## Branques i desplegament
+
+- `developer` és la branca d'integració i la branca per defecte. Les branques de feina en surten i hi
+  tornen per PR, amb merge commit.
+- `main` és producció i **encara no existeix**. Es crea el dia de la primera promoció des de
+  `developer`, i només quan l'usuari ho diu, cada vegada.
+- Vercel: projecte `construccions-calvet-web` (equip `nertelai-7298s-projects`). Cada branca hi té la
+  seva previsualització. `vercel.json` porta una porta: un build de producció que no vingui de `main`
+  es cancel·la sol. A Vercel la branca de producció ha de ser `main` (Settings → Environments →
+  Production); mentre no ho sigui, els pushes a `developer` es cancel·len en lloc de previsualitzar-se.
+- Node 22 a tot arreu: `engines` el fixa per a Vercel, i `@types/node` hi va a joc.
+
 ## Com està muntat
 
 - `src/content/` — **tot el text i les dades del negoci**. `business.ts` (adreça, telèfon, horari,
