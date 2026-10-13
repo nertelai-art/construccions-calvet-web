@@ -1,0 +1,413 @@
+.section {
+  position: relative;
+  height: 560vh;
+  border-block: 1px solid var(--ink);
+  background: var(--calc-2);
+}
+
+.stage {
+  --dusk: 0;
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  color: var(--ink);
+  transition: color 0.6s var(--ease);
+}
+
+.stage[data-dark='true'] {
+  color: var(--calc);
+}
+
+/* El capvespre és una capa de CSS que s'encén amb el progrés; l'escena només abaixa els llums. */
+.dusk {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 62% 78%, #3a2f3a 0%, #20222c 46%, var(--nit) 100%);
+  opacity: var(--dusk);
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding-top: var(--header-h);
+  pointer-events: none;
+}
+
+.copy {
+  display: grid;
+  gap: 18px;
+  width: min(100%, 400px);
+}
+
+.copy :global(.kicker) {
+  transition: color 0.6s var(--ease);
+}
+
+.stage[data-dark='true'] :global(.kicker),
+.stage[data-dark='true'] :global(.kicker) b {
+  color: var(--teula-clar);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 3.1vw, 3rem);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+.lead {
+  font-size: 1rem;
+  line-height: 1.5;
+  opacity: 0.78;
+}
+
+/* ── Passos: l'actiu s'obre, la resta queda en una línia ── */
+
+.steps {
+  display: grid;
+  margin-top: 8px;
+  border-top: 1px solid currentColor;
+}
+
+.steps > li {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: baseline;
+  padding-block: 9px;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  opacity: 0.42;
+  transition: opacity 0.45s var(--ease);
+}
+
+.steps > li[data-state='active'] {
+  opacity: 1;
+}
+
+.steps > li[data-state='done'] {
+  opacity: 0.62;
+}
+
+.number {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.steps > li[data-state='active'] .number {
+  color: var(--teula);
+}
+
+.stage[data-dark='true'] .steps > li[data-state='active'] .number {
+  color: var(--teula-clar);
+}
+
+.steps h3 {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.body {
+  overflow: hidden;
+  max-height: 0;
+  font-size: 0.93rem;
+  line-height: 1.45;
+  opacity: 0;
+  transition:
+    max-height 0.5s var(--ease),
+    opacity 0.45s var(--ease),
+    margin-top 0.45s var(--ease);
+}
+
+.steps > li[data-state='active'] .body {
+  max-height: 9em;
+  margin-top: 4px;
+  opacity: 0.88;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.legend li::before {
+  content: '';
+  width: 16px;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.legend li[data-tone='heat']::before {
+  background: #d8552a;
+}
+
+.legend li[data-tone='water']::before {
+  background: #2f86c2;
+}
+
+.legend li[data-tone='power']::before {
+  background: #e2b23c;
+}
+
+/* ── Etiquetes de l'anatomia: l'escena en mou cada una al seu punt ── */
+
+.labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.labels li {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.labels li::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 -3.5px -3.5px;
+  border-radius: 50%;
+  background: var(--teula);
+  box-shadow: 0 0 0 3px rgb(244 239 230 / 0.85);
+}
+
+.labels li::after {
+  content: '';
+  order: 1;
+  width: 40px;
+  height: 1px;
+  background: var(--ink);
+}
+
+.labels span {
+  order: 2;
+  padding: 5px 9px;
+  border: 1px solid var(--ink);
+  background: var(--calc);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink);
+}
+
+/* ── Regle de progrés, amb una marca per pas ── */
+
+.ruler {
+  position: absolute;
+  inset: auto var(--gutter) 26px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+}
+
+.count {
+  flex: none;
+}
+
+.track {
+  position: relative;
+  flex: 1;
+  height: 9px;
+  border-inline: 1px solid currentColor;
+  background:
+    linear-gradient(currentColor, currentColor) 0 50% / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px calc(100% / 6)) 0 0 / 100% 100%;
+  opacity: 0.9;
+}
+
+.fill {
+  position: absolute;
+  inset: 3px 0;
+  background: var(--teula);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* ── Sense WebGL: tot el contingut, sense recorregut ── */
+
+.section[data-compact] {
+  height: auto;
+}
+
+.section[data-compact] .stage {
+  position: static;
+  height: auto;
+  padding-block: var(--section);
+}
+
+.section[data-compact] .content {
+  display: grid;
+  grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(28px, 6vw, 96px);
+  padding-top: 0;
+}
+
+.section[data-compact] .steps > li,
+.section[data-still] .steps > li {
+  opacity: 1;
+}
+
+.section[data-compact] .body,
+.section[data-still] .body {
+  max-height: none;
+  margin-top: 4px;
+  opacity: 0.88;
+}
+
+.section[data-compact] :is(.ruler, .labels) {
+  display: none;
+}
+
+.fallback {
+  max-width: 620px;
+  justify-self: end;
+}
+
+/* ── Moviment reduït: sense recorregut. Una sola pantalla amb l'obra acabada i tots els passos. ── */
+
+.section[data-still]:not([data-compact]) {
+  height: auto;
+}
+
+.section[data-still]:not([data-compact]) .stage {
+  position: relative;
+  height: auto;
+  min-height: 100svh;
+}
+
+.section[data-still]:not([data-compact]) .content {
+  height: auto;
+  min-height: 100svh;
+  padding-block: calc(var(--header-h) + 40px) 96px;
+}
+
+/* ── Mòbil: títol a dalt, el pas actiu a baix i la masia al mig ── */
+
+@media (max-width: 860px) {
+  .content {
+    justify-content: space-between;
+    padding-block: calc(var(--header-h) + 18px) 68px;
+  }
+
+  .copy {
+    display: contents;
+  }
+
+  .content > .copy > :global(.kicker) {
+    order: 0;
+  }
+
+  .title {
+    margin-top: 10px;
+    font-size: clamp(1.5rem, 6.4vw, 2.1rem);
+  }
+
+  .lead {
+    display: none;
+  }
+
+  .steps {
+    margin-top: auto;
+    border-top: 0;
+  }
+
+  .section:not([data-compact], [data-still]) .steps > li:not([data-state='active']) {
+    display: none;
+  }
+
+  .steps > li {
+    padding: 12px 14px;
+    border: 1px solid currentColor;
+    background: color-mix(in srgb, var(--calc) 86%, transparent);
+    backdrop-filter: blur(6px);
+  }
+
+  .stage[data-dark='true'] .steps > li {
+    background: rgb(23 26 31 / 0.72);
+  }
+
+  .labels span {
+    padding: 3px 6px;
+    font-size: 0.58rem;
+  }
+
+  .labels li::after {
+    width: 16px;
+  }
+
+  .section[data-compact] .content {
+    grid-template-columns: 1fr;
+  }
+
+  .section[data-still]:not([data-compact]) .canvas {
+    position: relative;
+    height: 56svh;
+    margin-top: var(--header-h);
+  }
+
+  .section[data-still]:not([data-compact]) .content {
+    min-height: 0;
+    padding-block: 8px 84px;
+  }
+
+  .section[data-still] .copy {
+    display: grid;
+  }
+
+  .section[data-still] .steps {
+    margin-top: 8px;
+    gap: 8px;
+  }
+
+  .section[data-compact] .copy {
+    display: grid;
+  }
+}
+
+@media (max-height: 640px) and (min-width: 861px) {
+  .lead {
+    display: none;
+  }
+}
+
+.section[data-still] .lead,
+.section[data-compact] .lead {
+  display: none;
+}

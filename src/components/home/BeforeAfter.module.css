@@ -1,0 +1,220 @@
+.section {
+  padding-block: var(--section);
+  background: var(--ink);
+  color: var(--calc);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  align-items: center;
+  gap: clamp(28px, 6vw, 96px);
+}
+
+.copy {
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+}
+
+.copy :global(.kicker) {
+  color: var(--teula-clar);
+}
+
+.copy :global(.kicker) b {
+  color: rgb(244 239 230 / 0.55);
+}
+
+.copy :global(.display) {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+.lead {
+  color: rgb(244 239 230 / 0.72);
+}
+
+.tabs {
+  display: grid;
+  width: 100%;
+  margin-top: 14px;
+  border-top: 1px solid rgb(244 239 230 / 0.28);
+}
+
+.tabs button {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 14px 4px;
+  border: 0;
+  border-bottom: 1px solid rgb(244 239 230 / 0.28);
+  background: none;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: rgb(244 239 230 / 0.55);
+  cursor: pointer;
+  transition:
+    color 0.3s var(--ease),
+    padding-left 0.3s var(--ease);
+}
+
+.tabs button span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+}
+
+.tabs button:hover {
+  color: var(--calc);
+}
+
+.tabs button[aria-pressed='true'] {
+  padding-left: 16px;
+  color: var(--calc);
+}
+
+.tabs button[aria-pressed='true']::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--teula);
+}
+
+/* ── La cortina ── */
+
+.figure figcaption {
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(244 239 230 / 0.66);
+}
+
+.frame {
+  --pos: 50%;
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #2a2620;
+  outline: 1px solid rgb(244 239 230 / 0.3);
+  outline-offset: 8px;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.before {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+}
+
+.tag {
+  position: absolute;
+  top: 14px;
+  padding: 5px 10px;
+  background: rgb(28 25 21 / 0.78);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--calc);
+}
+
+.tag[data-side='before'] {
+  left: 14px;
+}
+
+.tag[data-side='after'] {
+  right: 14px;
+  background: var(--teula);
+}
+
+.handle {
+  position: absolute;
+  inset: 0 auto 0 var(--pos);
+  width: 2px;
+  margin-left: -1px;
+  background: var(--calc);
+  pointer-events: none;
+}
+
+.handle svg {
+  position: absolute;
+  max-width: none;
+  top: 50%;
+  left: 50%;
+  width: 46px;
+  height: 46px;
+  padding: 11px;
+  border-radius: 50%;
+  background: var(--calc);
+  color: var(--ink);
+  translate: -50% -50%;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.35);
+  transition: scale 0.25s var(--ease);
+}
+
+/* El control de debò: invisible, a sobre de tot, amb el cursor d'arrossegar. */
+.range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  touch-action: pan-y;
+}
+
+.range:hover ~ .handle svg,
+.range:active ~ .handle svg {
+  scale: 1.1;
+}
+
+.frame:has(.range:focus-visible) {
+  outline: 2px solid var(--teula-clar);
+}
+
+.frame:has(.range:focus-visible) .handle svg {
+  background: var(--teula);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tabs {
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 0;
+  }
+
+  .tabs button {
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 0;
+    font-size: 1.1rem;
+  }
+
+  .tabs button[aria-pressed='true'] {
+    padding-left: 0;
+    border-bottom-color: var(--teula);
+    box-shadow: 0 2px 0 var(--teula);
+  }
+
+  .tabs button[aria-pressed='true']::before {
+    display: none;
+  }
+}

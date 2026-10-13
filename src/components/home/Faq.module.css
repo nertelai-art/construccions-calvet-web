@@ -1,0 +1,113 @@
+.section {
+  border-top: 1px solid var(--linia);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: clamp(28px, 6vw, 96px);
+}
+
+.grid :global(.sectionHead) {
+  position: sticky;
+  top: calc(var(--header-h) + 32px);
+  margin-bottom: 0;
+}
+
+.grid :global(.display) {
+  font-size: clamp(1.9rem, 3.6vw, 3.1rem);
+}
+
+.list {
+  border-top: 1px solid var(--ink);
+}
+
+.item {
+  border-bottom: 1px solid var(--linia);
+}
+
+.item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 20px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.item summary::-webkit-details-marker {
+  display: none;
+}
+
+.item h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  transition: color 0.25s var(--ease);
+}
+
+.item summary:hover h3 {
+  color: var(--teula-fosc);
+}
+
+/* Creu que es tanca en un guió en obrir. */
+.item summary span {
+  position: relative;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--ink);
+  transition:
+    background-color 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+
+.item summary span::before,
+.item summary span::after {
+  content: '';
+  position: absolute;
+  inset: 50% 8px auto;
+  height: 1.5px;
+  margin-top: -0.75px;
+  background: var(--ink);
+  transition: transform 0.3s var(--ease);
+}
+
+.item summary span::after {
+  transform: rotate(90deg);
+}
+
+.item[open] summary span::after {
+  transform: rotate(0deg);
+}
+
+.item[open] summary span {
+  border-color: var(--teula);
+  background: var(--teula);
+}
+
+.item[open] summary span::before,
+.item[open] summary span::after {
+  background: #fff;
+}
+
+.item p {
+  max-width: 60ch;
+  padding-bottom: 24px;
+  color: var(--ink-2);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .grid :global(.sectionHead) {
+    position: static;
+    margin-bottom: 8px;
+  }
+}

@@ -1,0 +1,68 @@
+.drawing {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.stroke {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.15;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  vector-effect: non-scaling-stroke;
+}
+
+.heavy {
+  stroke-width: 1.9;
+}
+
+.light {
+  stroke: var(--ink-3);
+  stroke-width: 0.9;
+}
+
+.dimension {
+  stroke: var(--teula);
+  stroke-width: 0.9;
+}
+
+.notes text {
+  fill: var(--teula-fosc);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+}
+
+.notes .caption {
+  fill: var(--ink-3);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* El plànol es dibuixa sol en carregar: cada traç amb el seu retard. */
+@media (prefers-reduced-motion: no-preference) {
+  .drawing[data-animated] .stroke {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw 1.5s cubic-bezier(0.6, 0, 0.2, 1) calc(0.35s + var(--i) * 0.07s) forwards;
+  }
+
+  .drawing[data-animated] .notes {
+    opacity: 0;
+    animation: note 0.8s ease 2.4s forwards;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes note {
+  to {
+    opacity: 1;
+  }
+}

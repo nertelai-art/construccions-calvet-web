@@ -1,0 +1,169 @@
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 48px;
+  margin-bottom: clamp(32px, 4vw, 56px);
+}
+
+.head :global(.sectionHead) {
+  margin-bottom: 0;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filters button {
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.25s var(--ease),
+    color 0.25s var(--ease);
+}
+
+.filters button:hover {
+  background: var(--calc-3);
+}
+
+.filters button[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--calc);
+}
+
+/* Mur de fotos en columnes: cada foto conserva la seva proporció. */
+.wall {
+  columns: 3 280px;
+  column-gap: 14px;
+}
+
+.wall li {
+  break-inside: avoid;
+  margin-bottom: 14px;
+  animation: appear 0.5s var(--ease) both;
+}
+
+.tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--calc-3);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.tile img {
+  width: 100%;
+  height: auto;
+  transition:
+    scale 0.7s var(--ease),
+    filter 0.4s var(--ease);
+}
+
+.tile:hover img,
+.tile:focus-visible img {
+  scale: 1.045;
+}
+
+.tile span {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  padding: 4px 8px;
+  background: rgb(28 25 21 / 0.78);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  color: var(--calc);
+  opacity: 0;
+  translate: 0 6px;
+  transition:
+    opacity 0.3s var(--ease),
+    translate 0.3s var(--ease);
+}
+
+.tile:hover span,
+.tile:focus-visible span {
+  opacity: 1;
+  translate: none;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* ── Visor ── */
+
+.viewer {
+  width: min(94vw, 880px);
+  max-height: 94svh;
+  padding: 14px 14px 12px;
+  border: 0;
+  background: var(--calc);
+  color: var(--ink);
+}
+
+.viewer::backdrop {
+  background: rgb(18 16 13 / 0.86);
+}
+
+.viewer figure img {
+  width: 100%;
+  height: auto;
+  max-height: 74svh;
+  object-fit: contain;
+  background: var(--calc-3);
+}
+
+.viewer figcaption {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  margin-top: 12px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+
+.viewer figcaption span {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--teula-fosc);
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.controls button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  background: var(--ink);
+  color: var(--calc);
+}
