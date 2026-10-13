@@ -24,10 +24,17 @@ Previsualització: `.claude/launch.json` (`calvet-dev`, `calvet-prod`).
   tornen per PR, amb merge commit.
 - `main` és producció i **encara no existeix**. Es crea el dia de la primera promoció des de
   `developer`, i només quan l'usuari ho diu, cada vegada.
-- Vercel: projecte `construccions-calvet-web` (equip `nertelai-7298s-projects`). Cada branca hi té la
-  seva previsualització. `vercel.json` porta una porta: un build de producció que no vingui de `main`
-  es cancel·la sol. A Vercel la branca de producció ha de ser `main` (Settings → Environments →
-  Production); mentre no ho sigui, els pushes a `developer` es cancel·len en lloc de previsualitzar-se.
+- Vercel: projecte `construccions-calvet-web` (equip `nertelai-7298s-projects`), connectat al
+  repositori. **Les previsualitzacions surten de fer push a una branca**, mai de `vercel deploy`.
+- `vercel.json` porta una porta: un build de producció que no vingui de `main` es cancel·la sol.
+  Només actua en desplegaments disparats per Git, no en els de la CLI.
+- **El primer desplegament d'un projecte nou és de producció encara que es demani previsualització.**
+  Va passar aquí el 13-10-2026 amb `vercel deploy --target preview`; va fallar a la instal·lació i no
+  es va publicar res, però va ser per sort. En un projecte nou, el primer desplegament ha de venir
+  d'un push a una branca que no sigui la de producció.
+- A Vercel la branca de producció és `developer` perquè no deixa posar-hi `main` mentre no existeixi.
+  Per això els pushes a `developer` es cancel·len (la porta) en lloc de previsualitzar-se. Quan es
+  creï `main`, s'ha de canviar a Settings → Environments → Production.
 - Node 22 a tot arreu: `engines` el fixa per a Vercel, i `@types/node` hi va a joc.
 
 ## Com està muntat
