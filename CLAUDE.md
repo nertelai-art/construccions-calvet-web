@@ -22,19 +22,23 @@ Previsualització: `.claude/launch.json` (`calvet-dev`, `calvet-prod`).
 
 - `developer` és la branca d'integració i la branca per defecte. Les branques de feina en surten i hi
   tornen per PR, amb merge commit.
-- `main` és producció i **encara no existeix**. Es crea el dia de la primera promoció des de
-  `developer`, i només quan l'usuari ho diu, cada vegada.
+- `main` és producció. **Hi arriba només quan l'usuari ho diu, cada vegada**, per PR des de
+  `developer`. Es va crear el 13-10-2026 des de `developer`, a mà, perquè no es pot obrir una PR cap a
+  una branca que no existeix; no s'hi torna a pujar res a mà.
 - Vercel: projecte `construccions-calvet-web` (equip `nertelai-7298s-projects`), connectat al
-  repositori. **Les previsualitzacions surten de fer push a una branca**, mai de `vercel deploy`.
+  repositori, amb `main` com a branca de producció. Cada commit a `main` desplega a producció.
+- **Producció és pública**: https://construccions-calvet-web.vercel.app s'obre sense sessió de Vercel.
+  Encara no hi ha domini propi.
+- **Les previsualitzacions surten de fer push a una branca**, mai de `vercel deploy`, i demanen sessió
+  de Vercel (o un enllaç compartit).
 - `vercel.json` porta una porta: un build de producció que no vingui de `main` es cancel·la sol.
   Només actua en desplegaments disparats per Git, no en els de la CLI.
 - **El primer desplegament d'un projecte nou és de producció encara que es demani previsualització.**
   Va passar aquí el 13-10-2026 amb `vercel deploy --target preview`; va fallar a la instal·lació i no
   es va publicar res, però va ser per sort. En un projecte nou, el primer desplegament ha de venir
   d'un push a una branca que no sigui la de producció.
-- A Vercel la branca de producció és `developer` perquè no deixa posar-hi `main` mentre no existeixi.
-  Per això els pushes a `developer` es cancel·len (la porta) en lloc de previsualitzar-se. Quan es
-  creï `main`, s'ha de canviar a Settings → Environments → Production.
+- Vercel no deixa posar com a branca de producció una branca que no existeix: en un projecte nou,
+  fins que no es crea `main`, la branca de producció és la per defecte.
 - Node 22 a tot arreu: `engines` el fixa per a Vercel, i `@types/node` hi va a joc.
 
 ## Com està muntat
@@ -93,11 +97,16 @@ branca pròpia. `@types/node` va a 22 perquè és el Node que s'executa.
   del seu rètol. Quan arribi el vector oficial, el substitueix.
 - **Material**: fotos originals, foto de l'equip, llista d'obres per municipi.
 
-## Pendent abans de publicar
+## Pendent abans de donar-lo per publicat
 
+El web ja és a producció i és públic a l'adreça de Vercel, però encara no s'ha ensenyat ni validat.
+
+- **Indexació**: no porta `noindex`. Decidir si se n'hi posa fins que el client validi els textos.
+- **Domini propi** i, amb ell, `NEXT_PUBLIC_SITE_URL`. Sense la variable, l'enllaç canònic és el
+  domini de producció de Vercel (`src/lib/site-url.ts`).
 - **Enviament del pressupost**: no hi ha proveïdor. Ara la sol·licitud surt per `mailto:`. Quan n'hi
   hagi, va darrere d'una frontera pròpia i s'hi afegeix el consentiment de privacitat.
 - Avís legal, privacitat i galetes (el web antic en té; cal revisar-los, no copiar-los).
-- `og:image`, `sitemap.xml`, `robots.txt` i `NEXT_PUBLIC_SITE_URL`.
+- `og:image`, `sitemap.xml` i `robots.txt`.
 - Castellà, anglès i francès (el web antic els té). Pàgines de servei i galeria completa.
 - Lighthouse i un iPhone de veritat: l'escena només s'ha mirat en Chrome d'escriptori i a mida de mòbil.
