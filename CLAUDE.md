@@ -28,7 +28,8 @@ Previsualització: `.claude/launch.json` (`calvet-dev`, `calvet-prod`).
 - Vercel: projecte `construccions-calvet-web` (equip `nertelai-7298s-projects`), connectat al
   repositori, amb `main` com a branca de producció. Cada commit a `main` desplega a producció.
 - **Producció és pública**: https://construccions-calvet-web.vercel.app s'obre sense sessió de Vercel.
-  Encara no hi ha domini propi.
+  Encara no hi ha domini propi. Quan hi arribi el kit de demo, només amb enllaç personal (vegeu
+  «Demo per a leads»).
 - **Les previsualitzacions surten de fer push a una branca**, mai de `vercel deploy`, i demanen sessió
   de Vercel (o un enllaç compartit).
 - `vercel.json` porta una porta: un build de producció que no vingui de `main` es cancel·la sol.
@@ -40,6 +41,21 @@ Previsualització: `.claude/launch.json` (`calvet-dev`, `calvet-prod`).
 - Vercel no deixa posar com a branca de producció una branca que no existeix: en un projecte nou,
   fins que no es crea `main`, la branca de producció és la per defecte.
 - Node 22 a tot arreu: `engines` el fixa per a Vercel, i `@types/node` hi va a joc.
+
+## Demo per a leads (`src/demo-kit`)
+
+- **El web és una demo per a un lead**: un cop desplegat, només s'hi entra amb un enllaç personal, i
+  qui no en porta veu la pàgina de bloqueig de Nertel. Els enllaços es fan amb
+  `pnpm demo:link "Nom del lead" --days 15`, que llegeix el secret de `.env.local` (el mateix que a
+  Vercel; no es puja mai).
+- El codi ve del kit comú de les demos (`../nertel-demo-kit`, skill `demo-leads`). **No s'edita
+  aquí**: es canvia al kit i es torna a copiar, perquè totes les demos siguin iguals.
+- Vercel: `DEMO_SECRET` i `DEMO_SITE` (la porta), i `NEXT_PUBLIC_POSTHOG_KEY` i
+  `NEXT_PUBLIC_POSTHOG_HOST` (el seguiment de les visites dels leads amb PostHog). Sense
+  `DEMO_SECRET` el web és obert.
+- **Quan el web passi a ser el del client** es treu el kit: `src/proxy.ts`, `DemoTracker` i
+  `DemoBadge` del layout arrel, la carpeta `src/demo-kit`, `posthog-js`, l'script `demo:link` i les
+  variables. I es revisa l'avís de galetes.
 
 ## Com està muntat
 

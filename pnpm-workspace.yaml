@@ -1,4 +1,6 @@
 # pnpm 10 no executa scripts d'instal·lació sense permís explícit.
 # unrs-resolver: el postinstall només comprova el binari natiu (ja ve per optionalDependencies).
+# core-js (ve amb posthog-js): el postinstall només treu un missatge de donatius.
 ignoredBuiltDependencies:
   - unrs-resolver
+  - core-js
