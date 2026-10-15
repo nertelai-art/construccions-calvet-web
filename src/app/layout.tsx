@@ -4,6 +4,8 @@ import type { ReactNode } from 'react';
 import { RevealObserver } from '@/components/ui/RevealObserver';
 import { business } from '@/content/business';
 import { siteUrl } from '@/content/site';
+import { DemoBadge } from '@/demo-kit/DemoBadge';
+import { DemoTracker } from '@/demo-kit/DemoTracker';
 import './globals.css';
 
 const besley = Besley({ subsets: ['latin'], variable: '--font-besley', display: 'swap' });
@@ -69,6 +71,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </a>
         {children}
         <RevealObserver />
+        <DemoTracker site="construccions-calvet" />
+        <DemoBadge site="construccions-calvet" locale="ca" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       </body>
     </html>
