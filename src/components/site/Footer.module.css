@@ -70,6 +70,46 @@
   color: rgb(244 239 230 / 0.6);
 }
 
+/* Franja de crèdit sota el peu: una mica més fosca que el peu i amb una vora subtil a dalt. */
+.credit {
+  border-top: 1px solid rgb(244 239 230 / 0.08);
+  background: rgb(0 0 0 / 0.25);
+}
+
+.creditInner {
+  display: flex;
+  justify-content: center;
+  padding-block: 16px;
+}
+
+.footer .creditLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: rgb(244 239 230 / 0.6);
+  transition: color 0.2s ease;
+}
+
+.footer .creditLink:hover {
+  color: var(--calc);
+  text-decoration: none;
+}
+
+/* El blau marí del símbol és per a fons clars: sobre el peu fosc s'aclareix. */
+.creditMark {
+  width: auto;
+  height: 24px;
+  filter: brightness(2.2) saturate(1.2);
+}
+
+.creditName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr 1fr;
